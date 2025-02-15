@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'Product Listing App',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const HomeScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
