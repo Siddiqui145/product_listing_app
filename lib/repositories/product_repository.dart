@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'package:assignment/models/product.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart' show rootBundle;
+
 class ProductRepository {
   Future<List<Product>> fetchProducts() async {
-    final url = Uri.parse('https://example.com/data.json'); 
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body)['products'] as List;
+    try {
+      final jsonString = await rootBundle.loadString('assets/data.json');
+      final data = json.decode(jsonString)['products'] as List;
       return data.map((json) => Product.fromJson(json)).toList();
-    } else {
-      throw Exception('Failed to load products');
+    } catch (e) {
+      throw Exception('Failed to load products: ${e.toString()}');
     }
   }
 }
