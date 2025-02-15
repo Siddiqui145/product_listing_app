@@ -1,73 +1,41 @@
-import 'package:assignment/filter/filter_bloc.dart';
-import 'package:assignment/filter/filter_event.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FilterBottomSheet extends StatefulWidget {
   const FilterBottomSheet({super.key});
 
   @override
-  FilterBottomSheetState createState() => FilterBottomSheetState();
+  State<FilterBottomSheet> createState() => _FilterBottomSheetState();
 }
 
-class FilterBottomSheetState extends State<FilterBottomSheet> {
-  String _selectedCategory = 'All';
-  double _minPrice = 0.0;
-  double _maxPrice = 1000.0;
+class _FilterBottomSheetState extends State<FilterBottomSheet> {
+  RangeValues _priceRange = const RangeValues(0, 500);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            'Filter Products',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 16),
-          DropdownButtonFormField<String>(
-            value: _selectedCategory,
-            items: ['All', 'Electronics', 'Clothing', 'Home']
-                .map((category) => DropdownMenuItem(
-                      value: category,
-                      child: Text(category),
-                    ))
-                .toList(),
-            onChanged: (value) {
-              setState(() {
-                _selectedCategory = value!;
-              });
-            },
-            decoration: InputDecoration(labelText: 'Category'),
-          ),
+          const Text('Filter by Price', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 20),
           RangeSlider(
-            values: RangeValues(_minPrice, _maxPrice),
+            values: _priceRange,
             min: 0,
-            max: 1000,
-            divisions: 20,
-            labels: RangeLabels(
-              '\$${_minPrice.toStringAsFixed(0)}',
-              '\$${_maxPrice.toStringAsFixed(0)}',
-            ),
+            max: 500,
+            divisions: 50,
+            labels: RangeLabels('\$${_priceRange.start.toStringAsFixed(2)}', '\$${_priceRange.end.toStringAsFixed(2)}'),
             onChanged: (values) {
-              setState(() {
-                _minPrice = values.start;
-                _maxPrice = values.end;
-              });
+              setState(() => _priceRange = values);
             },
           ),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              context.read<FilterBloc>().add(UpdateFilter(
-                    category: _selectedCategory,
-                    minPrice: _minPrice,
-                    maxPrice: _maxPrice,
-                  ));
-              Navigator.of(context).pop();
+              // Trigger filter event here
+              Navigator.pop(context);
             },
-            child: Text('Apply Filters'),
+            child: const Text('Apply Filter'),
           ),
         ],
       ),
