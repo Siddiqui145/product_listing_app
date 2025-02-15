@@ -30,7 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product Listing', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),
+        title: const Text('Product Listing', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),),
+        centerTitle: true,
+        backgroundColor: Colors.blueGrey.shade200,
         actions: [
           IconButton(
             icon: const Icon(Icons.filter_list, size: 28),
@@ -42,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.blueAccent.shade100, Colors.purpleAccent.shade100],
+            colors: [Colors.blueAccent.shade100, const Color.fromARGB(255, 71, 52, 74)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

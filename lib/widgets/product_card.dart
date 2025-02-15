@@ -41,10 +41,9 @@ class ProductCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(product.name, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                  const SizedBox(height: 5),
-                  Text('\$${product.price.toStringAsFixed(2)}', style: const TextStyle(color: Colors.green, fontSize: 14)),
-                  const SizedBox(height: 5),
+                  Text(product.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleSmall),
+                  const SizedBox(height: 2),
+                  Text('\$${product.price.toStringAsFixed(2)}', style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.green)),
                   Row(
                     children: List.generate(5, (index) {
                       if (index < product.rating.round()) {
