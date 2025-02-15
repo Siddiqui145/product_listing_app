@@ -1,4 +1,8 @@
+import 'package:assignment/filter/filter_bloc.dart';
+import 'package:assignment/filter/filter_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class FilterBottomSheet extends StatefulWidget {
   const FilterBottomSheet({super.key});
@@ -9,6 +13,7 @@ class FilterBottomSheet extends StatefulWidget {
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
   RangeValues _priceRange = const RangeValues(0, 500);
+  String category = '';
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +35,20 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             },
           ),
           const SizedBox(height: 20),
+          TextField(
+            decoration: const InputDecoration(labelText: 'Category'),
+            onChanged: (value) {
+              category = value;
+            },
+          ),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              // Trigger filter event here
+              context.read<FilterBloc>().add(UpdateFilter(
+                    category: category,
+                    minPrice: _priceRange.start,
+                    maxPrice: _priceRange.end,
+                  ));
               Navigator.pop(context);
             },
             child: const Text('Apply Filter'),
